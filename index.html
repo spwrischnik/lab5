@@ -1,0 +1,70 @@
+<html>
+<head>
+<title> Pixabay Image Search </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" ></script>
+
+<style>
+body {
+text-align: center;
+}
+img {
+border-radius: 20px;
+}
+</style>
+<script>
+
+function searchImage() 
+{
+    
+    $.ajax({
+        type: "GET",
+        url: "https://pixabay.com/api/",
+        dataType: "json",
+        data: { "key":"5589438-47a0bca778bf23fc2e8c5bf3e",
+                "q":$("#keyword").val() },
+        success: function(result, status) 
+        {
+            result.hits = _.shuffle(result.hits);
+            $('#image').html("<img src='"+ result.hits[0].webformatURL+"' width='500'>");
+            $('#image').append("<br>Likes: " + result.hits[0].likes)
+            
+            $('#image2').html("<img src='"+ result.hits[1].webformatURL+"' width='500'>");
+            $('#image2').append("<br>Likes: " + result.hits[1].likes)
+            
+            $('#image3').html("<img src='"+ result.hits[2].webformatURL+"' width='500'>");
+            $('#image3').append("<br>Likes: " + result.hits[2].likes)
+            
+            $('#image4').html("<img src='"+ result.hits[3].webformatURL+"' width='500'>");
+            $('#image4').append("<br>Likes: " + result.hits[3].likes)
+        }
+    }); //ajax 
+
+}
+
+</script>
+</head>
+<body>
+
+<h1> Pixabay Image Search </h1>
+Keyword: <input type="text" id="keyword"> 
+<br>
+<select id = "orient">
+    <option value = ""> Select One</option>
+    <option> Vertical</option>
+    <option> Horizontal</option>
+</select>
+<button onclick="searchImage()"> Search </button>
+<br><br>
+
+
+<div id="image"></div>
+
+<div id="image2"></div>
+
+<div id="image3"></div>
+
+<div id="image4"></div>
+
+</body>
+</html>
